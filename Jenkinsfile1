@@ -13,7 +13,7 @@ pipeline {
             tools {  maven 'mymaven' }
             steps {
                 script {
-                    echo 'Compile ${params.Env}'
+                    echo "Compile ${params.Env}"
                     sh 'mvn compile'
                 }
             }
@@ -52,7 +52,7 @@ pipeline {
             tools {  maven 'mymaven' }
             steps {
                 script {
-                    echo 'Code Coverages ${params.APPVERSION}'
+                    echo "Code Coverages ${params.APPVERSION}"
                     sh 'mvn verify'
                 }
             }
