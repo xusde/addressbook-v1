@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'mymaven'
+    }
+    stages {
+        stage('Compile') {
+            steps {
+                script {
+                    echo 'Compile'
+                    sh 'mvn compile'
+                }
+            }
+        }
+        stage("Code Analysis") {
+            steps {
+                script {
+                    echo 'Code Analysis'
+                    sh 'mvn pmd:pmd'
+                }
+            }
+        }
+        stage('Unit Test') {
+            steps {
+                script {
+                    echo 'Unit Test'
+                    sh 'mvn test'
+                }
+                post {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        
+        stage('Code Coverage') {
+            steps {
+                script {
+                    echo 'Code Coverages'
+                    sh 'mvn verify'
+                }
+            }
+        }
+        
+        stage('Packaging') {
+            steps {
+                script {
+                      echo 'Packaging'
+                      sh 'mvn package'
+                }
+            }
+        }
+    }
+}
