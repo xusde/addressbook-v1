@@ -1,7 +1,7 @@
 # sudo install jre, and maven, git is already there in ubuntu
-sudo apt update
-sudo apt install fontconfig openjdk-21-jre
-sudo apt install mvn
+sudo apt update -y
+sudo apt install -y fontconfig openjdk-21-jre
+sudo apt install -y maven
 
 
 if [ -d "addressbook-v1" ]
