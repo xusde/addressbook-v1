@@ -15,14 +15,15 @@ pipeline {
     stages {
         stage('Compile') {
             agent any
-            tools {  maven 'mymaven' }
+//          tools {  maven 'mymaven' }
             steps {
                 script {
-                     sshagent(['ssh-agent-plugin']){
-                     echo 'Compiling the code ${params.Env}'
-                     sh "scp -o StrictHostKeyChecking=no server-script1.sh ${BUILD_SERVER}:/home/ubuntu"
-                     sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash /home/ubuntu/server-script1.sh'"
-                }
+                     sshagent(['ssh-agent-plugin']) {
+                         echo "Compiling the code ${params.Env}"
+                         sh "scp -o StrictHostKeyChecking=no server-script1.sh ${BUILD_SERVER}:/home/ubuntu"
+                         sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash /home/ubuntu/server-script1.sh'"
+                    }
+                }    
             }
         }
         stage("Code Analysis") {
