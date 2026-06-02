@@ -15,7 +15,6 @@ pipeline {
     stages {
         stage('Compile') {
             agent any
-            tools {  maven 'mymaven' }
             steps {
                 script {
                      sshagent(['ssh-agent-plugin']) {
