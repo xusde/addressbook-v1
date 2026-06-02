@@ -61,6 +61,15 @@ pipeline {
         stage('Packaging') {
             agent { label 'slave5-labels' }
             tools {  maven 'mymaven' }
+
+            input{
+               message "Package the code"
+               ok "Platform selected"
+               parameters{
+                   choice(name:'Platform',choices:['Ec2','OnPrem'])
+               }
+           }
+
             steps {
                 script {
                       echo 'Packaging'
