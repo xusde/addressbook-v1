@@ -1,11 +1,9 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'mymaven'
-    }
+    agent none
     stages {
         stage('Compile') {
+            agent any
+            tools {  maven 'mymaven' }
             steps {
                 script {
                     echo 'Compile'
@@ -14,6 +12,8 @@ pipeline {
             }
         }
         stage("Code Analysis") {
+            agent any
+            tools {  maven 'mymaven' }
             steps {
                 script {
                     echo 'Code Analysis'
@@ -22,20 +22,24 @@ pipeline {
             }
         }
         stage('Unit Test') {
+            agent any
+            tools {  maven 'mymaven' }
             steps {
                 script {
                     echo 'Unit Test'
                     sh 'mvn test'
                 }
-                post {
-                      always {
-                         junit 'target/surefire-reports/*.xml'
-                      }
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
         
         stage('Code Coverage') {
+            agent any
+            tools {  maven 'mymaven' }
             steps {
                 script {
                     echo 'Code Coverages'
@@ -45,6 +49,8 @@ pipeline {
         }
         
         stage('Packaging') {
+            agent { label 'slave5-labels' }
+            tools {  maven 'mymaven' }
             steps {
                 script {
                       echo 'Packaging'
